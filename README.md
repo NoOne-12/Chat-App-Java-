@@ -1,15 +1,14 @@
 
+Java Group Chat Application (GUI + Sockets + Collections + Multithreading)
 
-Java Chat Application (GUI + Sockets + Collections + Multithreading)
-
-A simple yet powerful client–server chat application built in Java using:
+A simple yet powerful group chat system built in Java, where a central server manages all communication and multiple clients can join the same shared chatroom. The application uses:
 
 - Swing GUI for the user interface  
-- Sockets for network communication  
-- Multithreading for handling multiple clients  
-- Collections Framework for managing active users and message broadcasting  
+- Sockets for real‑time network communication  
+- Multithreading to handle multiple clients simultaneously  
+- Collections Framework to manage connected users and broadcast messages  
 
-This project demonstrates core concepts of network programming, concurrent processing, and GUI development in Java.
+This project demonstrates core concepts of network programming, concurrency, and GUI development in Java.
 
 ---
 
@@ -17,18 +16,20 @@ This project demonstrates core concepts of network programming, concurrent proce
 
 Client
 - Clean and responsive Swing-based GUI
-- Connects to server using TCP sockets
-- Sends and receives messages in real time
+- Connects to a central chat server using TCP sockets
+- Supports real-time group chatting
 - Displays chat history
-- Notifies when users join or leave
+- Notifies when users join or leave the chatroom
+- Sends and receives messages instantly
 
 Server
+- Acts as the central communication hub
 - Handles multiple clients using multithreading
 - Uses Collections (e.g., HashMap, ArrayList) to store:
   - Active client sockets  
   - Usernames  
   - Message logs  
-- Broadcasts messages to all connected clients
+- Broadcasts every message to all connected clients
 - Gracefully handles client disconnections
 
 ---
@@ -47,19 +48,21 @@ Server
 
 ⚙️ How It Works
 
-1. Server
+1. Central Server
 - Starts a ServerSocket on a specified port  
 - Waits for incoming client connections  
-- For each client:
-  - Creates a new ClientHandler thread
-  - Stores the client in a Collection
-  - Listens for messages and broadcasts them
+- For each new client:
+  - Creates a dedicated ClientHandler thread
+  - Registers the client in a Collection
+  - Listens for messages and broadcasts them to all clients
+
+The server never sends private messages — it maintains a shared group chat environment.
 
 2. Client
-- Connects to server using Socket
+- Connects to the central server using a TCP Socket
 - GUI runs on the Event Dispatch Thread (EDT)
 - A background thread listens for incoming messages
-- Messages typed in the GUI are sent to the server
+- Messages typed in the GUI are sent to the server and broadcast to everyone
 
 ---
 
@@ -68,7 +71,7 @@ Server
 1. Start the Server
 `bash
 javac Server.java
-java Server
+java Server 4800
 `
 
 2. Start a Client
@@ -77,7 +80,7 @@ javac Client.java
 java Client
 `
 
-You can open multiple clients to simulate a group chat.
+Open multiple clients to join the same group chatroom.
 
 ---
 
@@ -87,10 +90,10 @@ The project uses threads for:
 
 - Server main thread → Accepts new clients  
 - ClientHandler threads → One per connected client  
-- Client listener thread → Receives messages without freezing GUI  
+- Client listener thread → Receives messages without freezing the GUI  
 - Swing EDT → Handles all GUI updates  
 
-This ensures smooth, non-blocking communication.
+This ensures smooth, responsive, and non-blocking communication.
 
 ---
 
@@ -115,7 +118,7 @@ This ensures smooth, non-blocking communication.
 
 🤝 Contributing
 
-Pull requests are welcome!  
+Pull requests are welcome.  
 If you’d like to improve the GUI, optimize threading, or add new features, feel free to contribute.
 
 ---
@@ -123,4 +126,3 @@ If you’d like to improve the GUI, optimize threading, or add new features, fee
 📄 License
 
 This project is open-source and available under the MIT License.
-
